@@ -13,7 +13,6 @@ public class MyUITest extends BaseSeleniumTest {
   @Test
   public void test001() throws Exception {
 
-
     final WebDriver webDriver = driver
         .orElseThrow(() -> new RuntimeException("WebDriver not available"));
 

@@ -18,15 +18,12 @@ import java.util.function.Supplier;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import junit.org.rapidpm.vaadin.junit.rules.ScreenshotTestRule;
 
 /**
  *
@@ -34,16 +31,6 @@ import junit.org.rapidpm.vaadin.junit.rules.ScreenshotTestRule;
 public class BaseSeleniumTest extends BaseTest {
 
   protected Optional<WebDriver> driver;
-
-//  @Rule
-//  public ScreenshotTestRule screenshotTestRule = new ScreenshotTestRule();
-
-//  public Optional<WebDriver> driver() {
-//    System.out.println("driver = " + driver);
-//    return (driver == null)
-//           ? Optional.empty()
-//           : driver;
-//  }
 
   @Override
   @Before
@@ -53,17 +40,9 @@ public class BaseSeleniumTest extends BaseTest {
     // init webDriver here
     System.setProperty("webdriver.chrome.driver", "_data/chromedriver");
 
-//    ChromeOptions chromeOptions = new ChromeOptions();
-//    chromeOptions.addArguments("window-size=1024,768");
-
     DesiredCapabilities chromeCapabilities = DesiredCapabilities.chrome();
-//    chromeCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-
     driver = Optional.of(new ChromeDriver(chromeCapabilities));
-//    driver = Optional.of(new ChromeDriver());
 
-//    screenshotTestRule.setDriverOptional(driver);
-    //TODO setzen der Bildschirmgröße
     driver.ifPresent(d -> {
       d.manage().window().maximize();
 //      d.manage().window().setSize(new Dimension(1024, 768));
@@ -99,9 +78,6 @@ public class BaseSeleniumTest extends BaseTest {
   protected Supplier<WebElement> output = () -> element.apply(OUTPUT_ID);
   protected Supplier<WebElement> inputA = () -> element.apply(INPUT_ID_A);
   protected Supplier<WebElement> inputB = () -> element.apply(INPUT_ID_B);
-
-
-
 
   protected void takeScreenShot() {
     //take Screenshot
