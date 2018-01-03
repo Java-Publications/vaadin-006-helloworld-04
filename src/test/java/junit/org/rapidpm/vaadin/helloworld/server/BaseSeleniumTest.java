@@ -18,11 +18,9 @@ import java.util.function.Supplier;
 
 import org.junit.After;
 import org.junit.Before;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
@@ -36,25 +34,16 @@ public class BaseSeleniumTest extends BaseTest {
   @Before
   public void setUp() throws Exception {
     super.setUp();
-
-    // init webDriver here
     System.setProperty("webdriver.chrome.driver", "_data/chromedriver");
-
-    DesiredCapabilities chromeCapabilities = DesiredCapabilities.chrome();
-    driver = Optional.of(new ChromeDriver(chromeCapabilities));
-
-    driver.ifPresent(d -> {
-      d.manage().window().maximize();
-//      d.manage().window().setSize(new Dimension(1024, 768));
-    });
-    //final WebDriverWait wait = new WebDriverWait(driver, 10);
+    final ChromeOptions chromeOptions = new ChromeOptions();
+    chromeOptions.setHeadless(false);
+    driver = Optional.of(new ChromeDriver(chromeOptions));
   }
 
 
   @Override
   @After
   public void tearDown() throws Exception {
-    // kill webdriver / Browser here
     driver.ifPresent(d -> {
       d.close();
       d.quit();
@@ -65,7 +54,7 @@ public class BaseSeleniumTest extends BaseTest {
 
 
   //generic version - need it later
-  public BiFunction<WebDriver, String, Optional<WebElement>> elementFor
+  private BiFunction<WebDriver, String, Optional<WebElement>> elementFor
       = (driver, id) -> ofNullable(driver.findElement(id(id)));
 
   //localized version

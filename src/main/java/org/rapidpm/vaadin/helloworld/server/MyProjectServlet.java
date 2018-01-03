@@ -9,5 +9,5 @@ import com.vaadin.server.VaadinServlet;
  *
  */
 @WebServlet("/*")
-@VaadinServletConfiguration(productionMode = false, ui = MyUI.class)
+@VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
 public class MyProjectServlet extends VaadinServlet {}
