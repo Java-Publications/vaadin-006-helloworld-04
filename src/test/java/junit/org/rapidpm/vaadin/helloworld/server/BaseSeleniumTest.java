@@ -22,6 +22,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.rapidpm.vaadin.helloworld.server.MyUI;
 
 /**
  *
@@ -60,8 +61,9 @@ public class BaseSeleniumTest extends BaseTest {
   //localized version
   private Function<String, WebElement> element
       = (id) -> driver
-      .flatMap(driverOptional -> elementFor.apply(driverOptional, id))
-      .orElseThrow(()-> new RuntimeException("WebElement with the ID " + id +" is not available"));
+      .flatMap(d -> elementFor.apply(d, id))
+      .orElseThrow(()-> new RuntimeException("WebElement with the ID "
+                                             + id +" is not available"));
 
   protected Supplier<WebElement> button = () -> element.apply(BUTTON_ID);
   protected Supplier<WebElement> output = () -> element.apply(OUTPUT_ID);
@@ -73,9 +75,14 @@ public class BaseSeleniumTest extends BaseTest {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     try {
       //TODO check if possible
-      outputStream.write(((TakesScreenshot) driver.get()).getScreenshotAs(OutputType.BYTES));
-      //write to target/screenshot-[timestamp].jpg
-      final FileOutputStream out = new FileOutputStream("target/screenshot-" + LocalDateTime.now() + ".png");
+      outputStream
+          .write(((TakesScreenshot) driver.get())
+                     .getScreenshotAs(OutputType.BYTES));
+      //write to target/screenshot-[timestamp].png
+      final FileOutputStream out
+          = new FileOutputStream("target/screenshot-"
+                                 + LocalDateTime.now()
+                                 + ".png");
       out.write(outputStream.toByteArray());
       out.flush();
       out.close();

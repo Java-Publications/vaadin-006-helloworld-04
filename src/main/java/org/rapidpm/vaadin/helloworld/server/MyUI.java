@@ -28,7 +28,8 @@ public class MyUI extends UI {
     final Button button = new Button("click me");
     button.setId(BUTTON_ID);
     button.addClickListener(
-        event -> output.setValue(inputA.getValue() + inputB.getValue()));
+        event -> output.setValue(
+            inputA.getValue() + inputB.getValue()));
 
     setContent(
         new HorizontalLayout(
